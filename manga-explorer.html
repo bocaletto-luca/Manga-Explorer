@@ -9,7 +9,7 @@
   <!-- Chart.js for Top 10 Chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* Global Styles / Stili Globali */
+    /* Global Styles / Stili globali */
     body {
       background-color: #f8f9fa;
       color: #212529;
@@ -35,7 +35,7 @@
       margin-bottom: 20px;
     }
     .nav-menu button {
-      background-color: #28a745; /* Green buttons */
+      background-color: #28a745; /* Green menu buttons */
       color: #fff;
       border: none;
       padding: 10px 20px;
@@ -66,30 +66,22 @@
     .card-item:hover {
       background-color: #e9ecef;
     }
-    /* Updated Card Image Styling to Show Full Cover (without cropping) */
+    /* Updated Card Image Styling: Increase height & use contain */
     .card-img-top {
       width: 100%;
-      height: 350px; /* Increased height for full cover */
-      object-fit: contain; /* Use contain to scale down if needed without cropping */
+      height: 350px;  /* Increased height for full cover visibility */
+      object-fit: contain; /* Use contain so the full cover is shown without cropping */
     }
     /* Pagination Styles */
     .pagination { margin-top: 20px; }
     /* Modal Cover Image */
     .detail-img { max-height: 350px; object-fit: contain; }
     /* Alphabet Menu for Search by Letter */
-    #alphabetMenuLetter button {
-      margin: 2px;
-    }
+    #alphabetMenuLetter button { margin: 2px; }
     /* Genre Dropdown Styling */
-    #genreSelect {
-      max-width: 300px;
-      margin: 0 auto 20px auto;
-    }
-    /* Chart CSS */
-    #ratingChart {
-      max-width: 600px;
-      margin: 20px auto;
-    }
+    #genreSelect { max-width: 300px; margin: 0 auto 20px auto; }
+    /* Chart Canvas Styling */
+    #ratingChart { max-width: 600px; margin: 20px auto; }
     /* Footer Styling */
     footer {
       background-color: #343a40;
@@ -101,13 +93,13 @@
   </style>
 </head>
 <body>
-  <!-- Header (English/Italian) -->
+  <!-- Header (English / Italiano) -->
   <header>
     <h1>Manga Explorer – Complete Edition</h1>
     <p>Discover manga by name, letter, genre or explore the Top 100 Rated with charts!</p>
     <!-- (Italiano: Esplora manga per nome, lettera, genere oppure visualizza i Top 100 per rating con grafico!) -->
   </header>
-
+  
   <div class="container">
     <!-- Horizontal Navigation Menu -->
     <div class="nav-menu">
@@ -116,7 +108,7 @@
       <button onclick="switchView('viewFilterByGenre')">Filter by Genre</button>
       <button onclick="switchView('viewTopRated')">Top 100 Rated</button>
     </div>
-
+    
     <!-- View: Search by Name -->
     <div id="viewSearchByName" class="view">
       <h2 class="text-center mb-3">Search by Name</h2>
@@ -129,7 +121,7 @@
       <div id="resultsName"></div>
       <nav id="paginationName"></nav>
     </div>
-
+    
     <!-- View: Search by Letter -->
     <div id="viewSearchByLetter" class="view">
       <h2 class="text-center mb-3">Search by Letter</h2>
@@ -137,7 +129,7 @@
       <div id="resultsLetter"></div>
       <nav id="paginationLetter"></nav>
     </div>
-
+    
     <!-- View: Filter by Genre -->
     <div id="viewFilterByGenre" class="view">
       <h2 class="text-center mb-3">Filter by Genre</h2>
@@ -160,7 +152,7 @@
       <div id="resultsGenre"></div>
       <nav id="paginationGenre"></nav>
     </div>
-
+    
     <!-- View: Top 100 Rated -->
     <div id="viewTopRated" class="view">
       <h2 class="text-center mb-3">Top 100 Rated Manga</h2>
@@ -173,7 +165,7 @@
       <canvas id="ratingChart"></canvas>
     </div>
   </div>
-
+  
   <!-- Fullscreen Modal for Manga Details -->
   <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
@@ -183,7 +175,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="modalBody">
-          <!-- Manga details (cover, description, genres, author, chapters) will be injected here -->
+          <!-- Detailed manga information (cover, description, genres, authors, chapters) will be loaded here -->
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -191,12 +183,12 @@
       </div>
     </div>
   </div>
-
+  
   <!-- Footer -->
   <footer>
     <p>© 2025 Bocaletto Luca</p>
   </footer>
-
+  
   <!-- Bootstrap Bundle JS (includes Popper) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
@@ -205,12 +197,12 @@
      * Global Variables & State
      * (Italiano: Variabili globali e stato)
      ***********************/
-    // We're using Jikan API (v4) for manga data from MyAnimeList.
+    // We'll use the Jikan API for manga data
     // Endpoints:
-    // Search by name: https://api.jikan.moe/v4/manga?q={query}&page={page}
+    // Search by Name: https://api.jikan.moe/v4/manga?q={query}&page={page}
     // General list: https://api.jikan.moe/v4/manga?page={page}
-    // Filter by genre: https://api.jikan.moe/v4/manga?genres={genreID}&page={page}
-    // Top rated: https://api.jikan.moe/v4/manga?order_by=score&sort=desc&page={page}
+    // Filter by Genre: https://api.jikan.moe/v4/manga?genres={genreID}&page={page}
+    // Top Rated: https://api.jikan.moe/v4/manga?order_by=score&sort=desc&page={page}
     // Manga Details: https://api.jikan.moe/v4/manga/{id}
     const BASE_URL = "https://api.jikan.moe/v4/manga";
     const itemsPerPage = 20;
@@ -236,13 +228,13 @@
     /***********************
      * Utility Functions / Funzioni Utility
      ***********************/
-    // Switch view: hide all views, show selected view.
+    // Switch view: hide all views and show the selected one.
     function switchView(viewId) {
       document.querySelectorAll(".view").forEach(v => v.style.display = "none");
       document.getElementById(viewId).style.display = "block";
     }
 
-    // Common pagination rendering function.
+    // Common function to render paginated results.
     function renderPaginatedResults(resultsArray, currentPage, containerId, paginationId, changePageCallback) {
       const totalItems = resultsArray.length;
       const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -257,11 +249,11 @@
         return;
       }
 
+      // Build grid of cards.
       const grid = document.createElement("div");
       grid.className = "card-grid";
       pageItems.forEach(item => {
-        // For search by name, item has properties from Jikan's response;
-        // for other modes, item should have the same structure.
+        // In Search by Name mode, results are returned as manga objects.
         const manga = item;
         const card = document.createElement("div");
         card.className = "card-item";
@@ -305,7 +297,7 @@
         const response = await fetch(`${BASE_URL}/${mangaId}`);
         if (!response.ok) throw new Error("Error retrieving manga details");
         const data = await response.json();
-        // Jikan returns data in the "data" property.
+        // Jikan returns manga details in the "data" property.
         displayMangaDetails(data.data);
       } catch (error) {
         console.error(error);
@@ -342,9 +334,9 @@
       if (!query) return;
       try {
         const response = await fetch(`${BASE_URL}?q=${encodeURIComponent(query)}&page=1`);
-        if (!response.ok) throw new Error("Error in API");
+        if (!response.ok) throw new Error("Error retrieving manga");
         const data = await response.json();
-        searchNameResults = data.data; // Jikan returns manga in data property
+        searchNameResults = data.data;  // Jikan returns manga list in data property.
         namePage = 1;
         renderPaginatedResults(searchNameResults, namePage, "resultsName", "paginationName", changeNamePage);
       } catch (error) {
@@ -372,15 +364,15 @@
 
     async function searchByLetter(letter) {
       try {
-        // Let’s fetch several pages (for a broader dataset)
+        // Fetch several pages from the general list endpoint.
         let promises = [];
-        const numPages = 5;
+        const numPages = 3; // Adjust the number of pages to get a broader dataset.
         for (let i = 1; i <= numPages; i++) {
-          promises.push(fetch(`${BASE_URL}?page=${i}`).then(r => r.json()));
+          promises.push(fetch(`${BASE_URL}?page=${i}`).then(res => res.json()));
         }
         const pages = await Promise.all(promises);
         const allManga = pages.flatMap(page => page.data);
-        // Filter manga whose title starts with the selected letter (case-insensitive)
+        // Filter manga where the title starts with the selected letter (case-insensitive)
         letterResults = allManga.filter(manga => manga.title && manga.title[0].toUpperCase() === letter);
         letterPage = 1;
         renderPaginatedResults(letterResults, letterPage, "resultsLetter", "paginationLetter", changeLetterPage);
@@ -398,20 +390,6 @@
     /***********************
      * Mode: Filter by Genre / Modalità: Filtra per Genere
      ***********************/
-    // Mapping of genre names to Jikan genre IDs for manga.
-    const genreMapping = {
-      "Action": 1,
-      "Adventure": 2,
-      "Comedy": 4,
-      "Drama": 8,
-      "Fantasy": 10,
-      "Horror": 14,
-      "Mystery": 7,
-      "Romance": 22,
-      "Sci-Fi": 24,
-      "Slice of Life": 36
-    };
-
     async function filterByGenre() {
       const selectedGenre = document.getElementById("genreSelect").value;
       if (!selectedGenre) {
@@ -419,11 +397,9 @@
         return;
       }
       try {
-        // Use the genre mapping to get the genre ID.
-        const genreID = selectedGenre; // The dropdown value is set to genre ID.
-        // Fetch page 1 for this genre (Jikan supports pagination in genre filtered queries)
-        const response = await fetch(`${BASE_URL}?genres=${genreID}&page=1`);
-        if (!response.ok) throw new Error("Error in API");
+        // Fetch genre-filtered manga from page 1 (Jikan supports filtering by genre)
+        const response = await fetch(`${BASE_URL}?genres=${selectedGenre}&page=1`);
+        if (!response.ok) throw new Error("Error retrieving manga");
         const data = await response.json();
         genreResults = data.data;
         genrePage = 1;
@@ -444,18 +420,18 @@
      ***********************/
     async function loadTopRated() {
       try {
-        // Fetch several pages to build a broader dataset sorted by score (desc)
+        // Fetch several pages to get a broader dataset sorted by score (desc)
         let promises = [];
         const numPages = 3;
         for (let i = 1; i <= numPages; i++) {
-          promises.push(fetch(`${BASE_URL}?order_by=score&sort=desc&page=${i}`).then(r => r.json()));
+          promises.push(fetch(`${BASE_URL}?order_by=score&sort=desc&page=${i}`).then(res => res.json()));
         }
         const pages = await Promise.all(promises);
         const allManga = pages.flatMap(page => page.data);
-        // Sort again by score and take top 100.
+        // Filter out manga without a score, sort, and take top 100.
         topResults = allManga.filter(manga => manga.score !== null)
-                              .sort((a, b) => b.score - a.score)
-                              .slice(0, 100);
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 100);
         topPage = 1;
         renderPaginatedResults(topResults, topPage, "resultsTop", "paginationTop", changeTopPage);
         renderTop10Chart(topResults);
@@ -479,7 +455,7 @@
       const labels = top10.map(manga => manga.title);
       const data = top10.map(manga => manga.score);
       const ctx = document.getElementById("ratingChart").getContext("2d");
-      if(myChart) { myChart.destroy(); }
+      if (myChart) { myChart.destroy(); }
       myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -491,7 +467,7 @@
           }]
         },
         options: {
-          indexAxis: 'y',
+          indexAxis: 'y', // Render horizontal bar chart
           responsive: true,
           plugins: { legend: { display: false } },
           scales: {
@@ -508,7 +484,7 @@
     function init() {
       switchView("viewSearchByName");
       renderAlphabetMenuLetter();
-      // Clear result and pagination containers.
+      // Clear all result containers and pagination divs.
       document.getElementById("resultsName").innerHTML = "";
       document.getElementById("resultsLetter").innerHTML = "";
       document.getElementById("resultsGenre").innerHTML = "";
