@@ -3,6 +3,11 @@
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26.svg?style=flat)](https://developer.mozilla.org/en-US/docs/Web/HTML) [![CSS3](https://img.shields.io/badge/CSS3-1572B6.svg?style=flat)](https://developer.mozilla.org/en-US/docs/Web/CSS) [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![Bootstrap 5](https://img.shields.io/badge/Bootstrap-7952B3.svg?style=flat)](https://getbootstrap.com/) [![License: GPL](https://img.shields.io/badge/License-GPL-blue.svg)](LICENSE)
 
+#### index.html
+[![Test Online](https://img.shields.io/badge/Test%20Online-Click%20Here-brightgreen?style=for-the-badge)](https://bocaletto-luca.github.io/Manga-Explorer/index.html)
+#### index2.html
+[![Test Online](https://img.shields.io/badge/Test%20Online-Click%20Here-brightgreen?style=for-the-badge)](https://bocaletto-luca.github.io/Manga-Explorer/index2.html)
+
 ## Overview
 
 **Manga Explorer – Complete Edition** is a professional web application built entirely using free APIs. It allows users to discover manga through multiple search modes, including:
